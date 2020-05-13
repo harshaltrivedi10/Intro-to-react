@@ -1,13 +1,22 @@
 import React from "react";
 import { render } from "react-dom";
 import SearchParams from "./SearchParams";
+import { Router, Link } from "@reach/router";
+import Details from "./Details";
 
 const App = () => {
   return (
     <React.StrictMode>
       <div>
-        <h1 id="something important">Adopt Me!</h1>
-        <SearchParams />
+        <header>
+          <Link to="/">Adopt Me!</Link>
+        </header>
+
+        <Router>
+          {/* order of declaration doesn't matter in reach router */}
+          <SearchParams path="/" />
+          <Details path="/details/:id" />
+        </Router>
       </div>
     </React.StrictMode>
   );
