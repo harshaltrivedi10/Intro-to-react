@@ -27,15 +27,12 @@ const SearchParams = () => {
     // In use effect if you want the useEffect to be called just during the 1st
     // render cycle, use [] at the end. If you want useEffect to be called
     //  at every single change in the DOM, don't pass even an array!
-    pet.breeds(animal).then(
-      ({ breeds: apiBreeds }) => {
-        const breedStrings = apiBreeds.map(({ name }) => name);
-        //   Another way to fetch names
-        //   const breedStrings = breeds.map((breedObject) => breedObject.name);
-        setBreeds(breedStrings);
-      },
-      (error) => console.error(error)
-    );
+    pet.breeds(animal).then(({ breeds: apiBreeds }) => {
+      const breedStrings = apiBreeds.map(({ name }) => name);
+      //   Another way to fetch names
+      //   const breedStrings = breeds.map((breedObject) => breedObject.name);
+      setBreeds(breedStrings);
+    }, console.error);
   }, [animal, setBreed, setBreeds]);
 
   return (

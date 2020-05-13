@@ -1,4 +1,5 @@
 import React from "react";
+
 export default function Pet({ name, animal, breed, media, location, id }) {
   let hero = "http://placeorgi.com/300/300";
   if (media.length) {
@@ -10,8 +11,7 @@ export default function Pet({ name, animal, breed, media, location, id }) {
         <img src={hero} alt={name}></img>
       </div>
       <div className="info">
-        <h1>{name}</h1>
-        <h2>{`${animal} - ${breed} - ${location}`}</h2>
+        <h1> {name} </h1> <h2> {`${animal} - ${breed} - ${location}`} </h2>
       </div>
     </a>
   );
