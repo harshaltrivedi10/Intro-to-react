@@ -31,6 +31,4 @@ app.use((request, response) => {
     response.end();
   });
 });
-
-console.log("Listening on " + PORT);
 app.listen(PORT);

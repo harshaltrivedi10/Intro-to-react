@@ -1,18 +1,32 @@
 import React from "react";
-import Pet from "@frontendmasters/pet";
+import Pet, { Photo } from "@frontendmasters/pet";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import ThemeContext from "./ThemeContext";
 import Modal from "./Modal";
-import { navigate } from "@reach/router";
+import { navigate, RouteComponentProps } from "@reach/router";
 
-class Details extends React.Component {
-  state = { loading: true, showModal: false };
+class Details extends React.Component<RouteComponentProps<{ id: string }>> {
+  public state = {
+    loading: true,
+    showModal: false,
+    name: "",
+    animal: "",
+    location: "",
+    description: "",
+    media: [] as Photo[],
+    url: "",
+    breed: "",
+  };
 
-  componentDidMount() {
+  public componentDidMount() {
     // Runs on first load
     // doing AJAX requests
-    Pet.animal(this.props.id).then(({ animal }) => {
+    if (!this.props.id) {
+      navigate("/");
+      return;
+    }
+    Pet.animal(+this.props.id).then(({ animal }) => {
       this.setState({
         url: animal.url,
         name: animal.name,
@@ -26,7 +40,7 @@ class Details extends React.Component {
     }, console.error);
   }
 
-  toggleModal = () => {
+  public toggleModal = () => {
     this.setState({ showModal: !this.state.showModal });
   };
 
@@ -88,7 +102,9 @@ class Details extends React.Component {
   }
 }
 
-export default function DetailsWithErrorBoundary(props) {
+export default function DetailsWithErrorBoundary(
+  props: RouteComponentProps<{ id: string }>
+) {
   return (
     <ErrorBoundary>
       <Details {...props} />

@@ -1,12 +1,22 @@
 import React from "react";
+import { Photo } from "@frontendmasters/pet";
 
-class Carousel extends React.Component {
-  state = {
+interface IProps {
+  media: Photo[];
+}
+
+interface IState {
+  active: number;
+  photos: string[];
+}
+
+class Carousel extends React.Component<IProps, IState> {
+  public state = {
     photos: [],
     active: 0,
   };
 
-  static getDerivedStateFromProps({ media }) {
+  public static getDerivedStateFromProps({ media }: IProps) {
     //   used to filter props and add them to state and it has to be static
     let photos = ["http://placeorgi.com/600/600"];
 
@@ -17,18 +27,23 @@ class Carousel extends React.Component {
     return { photos };
   }
 
-  handleIndexClick = (event) => {
-    this.setState({
-      active: +event.target.dataset.index,
-    });
+  public handleIndexClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (!(event.target instanceof HTMLElement)) {
+      return;
+    }
+    if (event.target.dataset.index) {
+      this.setState({
+        active: +event.target.dataset.index,
+      });
+    }
   };
 
-  render() {
+  public render() {
     const { photos, active } = this.state;
 
     return (
       <div className="carousel">
-        <img src={photos[active]} alt={"animal"}></img>
+        <img src={photos[active]} alt={"animal"} />
         <div className="carousel-smaller">
           {photos.map((photo, index) => (
             //   eslint-disable-next-line
