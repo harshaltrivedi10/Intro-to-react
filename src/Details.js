@@ -2,7 +2,7 @@ import React from "react";
 import Pet from "@frontendmasters/pet";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
-import ThemeContext from "./ThemeContext";
+import { connect } from "react-redux";
 import Modal from "./Modal";
 import { navigate } from "@reach/router";
 
@@ -23,7 +23,7 @@ class Details extends React.Component {
         breed: animal.breeds.primary,
         loading: false,
       });
-    }, console.error);
+    });
   }
 
   toggleModal = () => {
@@ -60,16 +60,13 @@ class Details extends React.Component {
             )}
           </ThemeContext.Consumer> */}
           {/* Just pulling out theme from the array */}
-          <ThemeContext.Consumer>
-            {([theme]) => (
-              <button
-                onClick={this.toggleModal}
-                style={{ backgroundColor: theme }}
-              >
-                Adopt {name}
-              </button>
-            )}
-          </ThemeContext.Consumer>
+          <button
+            onClick={this.toggleModal}
+            style={{ backgroundColor: this.props.theme }}
+          >
+            Adopt {name}
+          </button>
+
           <p>{description}</p>
           {showModal ? (
             <Modal>
@@ -88,10 +85,14 @@ class Details extends React.Component {
   }
 }
 
+const mapStateToProps = ({ theme }) => ({ theme });
+
+const WrappedDetails = connect(mapStateToProps)(Details);
+
 export default function DetailsWithErrorBoundary(props) {
   return (
     <ErrorBoundary>
-      <Details {...props} />
+      <WrappedDetails {...props} />
     </ErrorBoundary>
   );
 }
